@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Server Status Checker</title>
   <style>
-    /* CSS for styling the page */
+    /* CSS (Inline in the same HTML file) */
     * {
       margin: 0;
       padding: 0;
@@ -33,19 +33,6 @@
       margin-bottom: 20px;
     }
 
-    button {
-      padding: 10px 20px;
-      background-color: #4CAF50;
-      color: #fff;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-
-    button:hover {
-      background-color: #45a049;
-    }
-
     .status-message {
       margin-top: 20px;
       font-size: 18px;
@@ -69,29 +56,38 @@
 
   <div class="container">
     <h1>Server Status Checker</h1>
-    <button id="checkStatusButton">Check Server Status</button>
-    <div id="statusMessage" class="status-message"></div>
+    <div id="statusMessage" class="status-message">Checking server status...</div>
   </div>
 
   <!-- Axios CDN -->
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
-  <!-- External Script (uptime.js) -->
-  <script src="uptime.js"></script>
-
-  <!-- Main Script (script.js) -->
+  <!-- JavaScript for uptime logic (Integrated into the same HTML file) -->
   <script>
-    // script.js (Written inline within index.html)
+    // The URL of the server you want to monitor (Updated to your URL)
+    const targetUrl = "https://nafijup.onrender.com/"; 
 
-    const checkStatusButton = document.getElementById('checkStatusButton');
-    const statusMessage = document.getElementById('statusMessage');
+    // Function to send request and check server status
+    async function sendRequest() {
+      try {
+        const response = await axios.get(targetUrl);
+        if (response.status >= 200 && response.status < 300) {
+          return { message: `Server is Online (Status: ${response.status})`, statusClass: 'online' };
+        } else {
+          return { message: `Potentially Down (Status: ${response.status})`, statusClass: 'offline' };
+        }
+      } catch (error) {
+        return { message: `Down or Network Error: ${error.message}`, statusClass: 'warning' };
+      }
+    }
 
-    // Event listener for button click
-    checkStatusButton.addEventListener('click', async () => {
+    // Automatically check server status when the page loads
+    window.onload = async () => {
       const { message, statusClass } = await sendRequest();  // Call the sendRequest function from uptime.js
+      const statusMessage = document.getElementById('statusMessage');
       statusMessage.textContent = message;
       statusMessage.className = 'status-message ' + statusClass;  // Add the class to update the style (online/offline/warning)
-    });
+    };
   </script>
 
 </body>
