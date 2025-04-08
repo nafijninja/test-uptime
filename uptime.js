@@ -1,6 +1,6 @@
 // uptime.js
 
-const targetUrl = "https://jsonplaceholder.typicode.com/todos/1";  // Example URL
+const targetUrl = "https://uptime-s4xk.onrender.com";  // Example URL
 
 // Function to send request and check server status
 async function sendRequest() {
