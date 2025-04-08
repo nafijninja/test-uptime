@@ -1,11 +1,11 @@
-// uptime.js
+// uptime.js (Contains the logic to check server status)
 
-const targetUrl = "https://uptime-s4xk.onrender.com";  // Example URL
+const targetUrl = "https://uptime-s4xk.onrender.com"; // Replace with your actual URL
 
 // Function to send request and check server status
 async function sendRequest() {
   try {
-    const response = await axios.get(targetUrl);  // Make the request using Axios
+    const response = await axios.get(targetUrl);
     if (response.status >= 200 && response.status < 300) {
       return { message: `Server is Online (Status: ${response.status})`, statusClass: 'online' };
     } else {
