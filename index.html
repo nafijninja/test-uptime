@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Server Status Checker</title>
+  <style>
+    /* CSS (Inline in the same HTML file) */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f9;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .container {
+      text-align: center;
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+      margin-bottom: 20px;
+    }
+
+    button {
+      padding: 10px 20px;
+      background-color: #4CAF50;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #45a049;
+    }
+
+    .status-message {
+      margin-top: 20px;
+      font-size: 18px;
+      font-weight: bold;
+    }
+
+    .online {
+      color: green;
+    }
+
+    .offline {
+      color: red;
+    }
+
+    .warning {
+      color: orange;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h1>Server Status Checker</h1>
+    <button id="checkStatusButton">Check Server Status</button>
+    <div id="statusMessage" class="status-message"></div>
+  </div>
+
+  <!-- Axios CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+  <!-- External Script (uptime.js) -->
+  <script>
+    // uptime.js (Written inline within index.html)
+    const targetUrl = "https://jsonplaceholder.typicode.com/todos/1"; // Example URL
+
+    // Function to send request and check server status
+    async function sendRequest() {
+      try {
+        const response = await axios.get(targetUrl);
+        if (response.status >= 200 && response.status < 300) {
+          return { message: `Server is Online (Status: ${response.status})`, statusClass: 'online' };
+        } else {
+          return { message: `Potentially Down (Status: ${response.status})`, statusClass: 'offline' };
+        }
+      } catch (error) {
+        return { message: `Down or Network Error: ${error.message}`, statusClass: 'warning' };
+      }
+    }
+  </script>
+
+  <!-- Main Script (script.js) -->
+  <script>
+    // script.js (Written inline within index.html)
+
+    const checkStatusButton = document.getElementById('checkStatusButton');
+    const statusMessage = document.getElementById('statusMessage');
+
+    // Event listener for button click
+    checkStatusButton.addEventListener('click', async () => {
+      const { message, statusClass } = await sendRequest();  // Call the sendRequest function from uptime.js
+      statusMessage.textContent = message;
+      statusMessage.className = 'status-message ' + statusClass;  // Add the class to update the style (online/offline/warning)
+    });
+  </script>
+
+</body>
+</html>
