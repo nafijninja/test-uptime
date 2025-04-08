@@ -2,9 +2,10 @@
   "name": "server-status-checker",
   "version": "1.0.0",
   "description": "A simple server status checker using Axios",
-  "main": "index.html",  // Use index.html for the front-end
+  "main": "index.html",
   "scripts": {
-    "start": "echo \"No start script for static site\""
+    "start": "echo \"No start command required\"",
+    "build": "echo \"No build step required\""
   },
   "dependencies": {
     "axios": "^0.21.1"
