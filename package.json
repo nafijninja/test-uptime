@@ -1,0 +1,15 @@
+{
+  "name": "server-status-checker",
+  "version": "1.0.0",
+  "description": "A simple server status checker using Axios",
+  "main": "index.html",  // Use index.html for the front-end
+  "scripts": {
+    "start": "echo \"No start script for static site\""
+  },
+  "dependencies": {
+    "axios": "^0.21.1"
+  },
+  "devDependencies": {},
+  "author": "Your Name",
+  "license": "ISC"
+}
