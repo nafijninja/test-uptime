@@ -5,7 +5,7 @@
   "main": "pingService.js",
   "scripts": {
     "start": "node pingService.js",
-    "install": "npm install"  // This command will install the dependencies
+    "install": "npm install" 
   },
   "dependencies": {
     "axios": "^0.27.2"
