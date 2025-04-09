@@ -5,15 +5,16 @@
   "main": "pingService.js",
   "scripts": {
     "start": "node pingService.js",
-    "install": "npm install" 
+    "install": "npm install --legacy-peer-deps",
+    "build": "echo 'No build step necessary'"
   },
   "dependencies": {
     "axios": "^0.27.2"
   },
- "engines": {
-  "node": ">=14.x <=22.x"
-},
-  "author": "Nafij Rahaman",
+  "engines": {
+    "node": ">=14.x <=22.x",
+    "npm": ">=6.0.0"
+  },
+  "author": "NAFIJ RAHAMAN",
   "license": "ISC"
 }
-
