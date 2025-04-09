@@ -1,0 +1,17 @@
+{
+  "name": "my-monitoring-service",
+  "version": "1.0.0",
+  "description": "A simple service to keep a website alive by pinging it every minute.",
+  "main": "api/pingService.js",
+  "scripts": {
+    "start": "vercel dev"
+  },
+  "dependencies": {
+    "axios": "^0.27.2"
+  },
+  "engines": {
+    "node": "14.x"
+  },
+  "author": "",
+  "license": "ISC"
+}
