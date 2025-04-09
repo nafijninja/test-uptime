@@ -1,16 +1,18 @@
 {
-  "name": "server-status-checker",
+  "name": "my-monitoring-service",
   "version": "1.0.0",
-  "description": "A simple server status checker using Axios",
-  "main": "index.html",
+  "description": "A simple service to keep a website alive by pinging it every minute.",
+  "main": "pingService.js",
   "scripts": {
-    "start": "echo \"No start command required\"",
-    "build": "echo \"No build step required\""
+    "start": "node pingService.js",
+    "install": "npm install"  // This command will install the dependencies
   },
   "dependencies": {
-    "axios": "^0.21.1"
+    "axios": "^0.27.2"
   },
-  "devDependencies": {},
-  "author": "Your Name",
+  "engines": {
+    "node": "14.x"
+  },
+  "author": "Nafij Rahaman",
   "license": "ISC"
 }
