@@ -34,33 +34,50 @@
   <div id="logs"></div>
 
   <script>
+    // Function to fetch logs from the server
     async function fetchLogs() {
       try {
         const response = await fetch('/api/pingService');
         const logs = await response.json();
 
-        const logContainer = document.getElementById('logs');
-        logContainer.innerHTML = ''; // Clear the current logs
+        // Store logs in localStorage to persist them
+        localStorage.setItem('pingLogs', JSON.stringify(logs));
 
-        logs.forEach(log => {
-          const logEntry = document.createElement('div');
-          logEntry.classList.add('log-entry');
-          logEntry.textContent = log;
-          logContainer.appendChild(logEntry);
-        });
-
-        // Keep the logs scrolled to the bottom
-        logContainer.scrollTop = logContainer.scrollHeight;
+        // Update the log container with the new logs
+        updateLogs(logs);
       } catch (error) {
         console.error('Error fetching logs:', error);
       }
     }
 
+    // Function to update the log container
+    function updateLogs(logs) {
+      const logContainer = document.getElementById('logs');
+      logContainer.innerHTML = ''; // Clear the current logs
+
+      logs.forEach(log => {
+        const logEntry = document.createElement('div');
+        logEntry.classList.add('log-entry');
+        logEntry.textContent = log;
+        logContainer.appendChild(logEntry);
+      });
+
+      // Keep the logs scrolled to the bottom
+      logContainer.scrollTop = logContainer.scrollHeight;
+    }
+
+    // Check if logs are stored in localStorage
+    const storedLogs = localStorage.getItem('pingLogs');
+    if (storedLogs) {
+      // If logs are stored, load them
+      updateLogs(JSON.parse(storedLogs));
+    } else {
+      // If no logs are stored, fetch new logs
+      fetchLogs();
+    }
+
     // Refresh logs every 10 seconds
     setInterval(fetchLogs, 10000);
-
-    // Initial fetch of logs
-    fetchLogs();
   </script>
 </body>
 </html>
