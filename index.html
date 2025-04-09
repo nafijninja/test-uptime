@@ -3,92 +3,74 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Server Status Checker</title>
+  <title>Website Uptime Monitor</title>
   <style>
-    /* CSS (Inline in the same HTML file) */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
     body {
       font-family: Arial, sans-serif;
       background-color: #f4f4f9;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-    }
-
-    .container {
       text-align: center;
-      background-color: #fff;
-      padding: 20px;
-      border-radius: 8px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      padding: 50px;
     }
-
-    h1 {
-      margin-bottom: 20px;
-    }
-
-    .status-message {
+    .status {
+      font-size: 20px;
       margin-top: 20px;
-      font-size: 18px;
-      font-weight: bold;
     }
-
-    .online {
+    .up {
       color: green;
     }
-
-    .offline {
+    .down {
       color: red;
     }
-
-    .warning {
+    .info {
+      font-size: 16px;
+      color: #555;
+    }
+    .loading {
+      font-size: 18px;
       color: orange;
     }
   </style>
 </head>
 <body>
 
-  <div class="container">
-    <h1>Server Status Checker</h1>
-    <div id="statusMessage" class="status-message">Checking server status...</div>
-  </div>
-
-  <!-- Axios CDN -->
+  <h1>Website Uptime Monitor</h1>
+  <p class="info">This page checks the status of your website every minute.</p>
+  
+  <div id="status" class="status loading">Checking status...</div>
+  
+  <!-- Include Axios CDN -->
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
-  <!-- JavaScript for uptime logic (Integrated into the same HTML file) -->
   <script>
-    // The URL of the server you want to monitor (Updated to your URL)
-    const targetUrl = "https://chat-full-o3as.onrender.com"; 
+    const url = 'https://phoneshopbd.onrender.com'; // Replace with your website's URL
+    const statusElement = document.getElementById('status');
 
-    // Function to send request and check server status
-    async function sendRequest() {
+    // Function to send a GET request to the website and update the status
+    const pingWebsite = async () => {
       try {
-        const response = await axios.get(targetUrl);
-        if (response.status >= 200 && response.status < 300) {
-          return { message: `Server is Online (Status: ${response.status})`, statusClass: 'online' };
+        // Sending a GET request to the website
+        const response = await axios.get(url);
+        
+        // Check if the website is up (status code 200)
+        if (response.status === 200) {
+          statusElement.textContent = 'Website is up and running!';
+          statusElement.className = 'status up';
         } else {
-          return { message: `Potentially Down (Status: ${response.status})`, statusClass: 'offline' };
+          statusElement.textContent = 'Website is down! (Status code: ' + response.status + ')';
+          statusElement.className = 'status down';
         }
       } catch (error) {
-        return { message: `Down or Network Error: ${error.message}`, statusClass: 'warning' };
+        // If there's an error (e.g., website down), update the status
+        statusElement.textContent = 'Website is down! (Error: ' + error.message + ')';
+        statusElement.className = 'status down';
       }
-    }
-
-    // Automatically check server status when the page loads
-    window.onload = async () => {
-      const { message, statusClass } = await sendRequest();  // Call the sendRequest function from uptime.js
-      const statusMessage = document.getElementById('statusMessage');
-      statusMessage.textContent = message;
-      statusMessage.className = 'status-message ' + statusClass;  // Add the class to update the style (online/offline/warning)
     };
-  </script>
 
+    // Initial check for the website status
+    pingWebsite();
+
+    // Set an interval to ping the website every minute (60000 ms)
+    setInterval(pingWebsite, 60000); // 60000 ms = 1 minute
+  </script>
 </body>
 </html>
