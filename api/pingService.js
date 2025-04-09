@@ -1,7 +1,7 @@
 const axios = require('axios');
 
 // Your website URL to monitor
-const url = 'https://phoneshopbd.onrender.com'; // Replace with your website URL
+const url = 'https://chat-full-o3as.onrender.com'; // Replace with your website URL
 
 let logs = [];
 
